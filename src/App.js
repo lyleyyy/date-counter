@@ -4,15 +4,24 @@ import "./App.css";
 function App() {
   const [step, setStep] = useState(1);
   const [count, setCount] = useState(0);
+  const [isDisplay, setIsDisplay] = useState(false);
   const date = new Date();
   date.setDate(date.getDate() + count);
 
-  function handleStepDec() {
-    setStep((step) => step - 1);
+  function handleStepChange(e) {
+    setStep(+e.target.value);
+    setIsDisplay(true);
   }
 
-  function handleStepInc() {
-    setStep((step) => step + 1);
+  function handleCountChange(e) {
+    setCount(+e.target.value);
+    setIsDisplay(true);
+  }
+
+  function handleReset() {
+    setStep(1);
+    setCount(0);
+    setIsDisplay(false);
   }
 
   function handleCountDec() {
@@ -26,14 +35,19 @@ function App() {
   return (
     <div className="App">
       <div className="containers">
-        <button onClick={handleStepDec}>-</button>
-        <span>Step : {step}</span>
-        <button onClick={handleStepInc}>+</button>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={step}
+          onChange={handleStepChange}
+        />
+        <span>{step}</span>
       </div>
 
       <div className="containers">
         <button onClick={handleCountDec}>-</button>
-        <span>Count : {count}</span>
+        <input type="number" onChange={handleCountChange} />
         <button onClick={handleCountInc}>+</button>
       </div>
 
@@ -44,6 +58,13 @@ function App() {
         {count < 0 ? `before today was ` : count > 0 ? `from today is ` : ""}
         {date.toDateString()}
       </p>
+
+      <button
+        style={isDisplay ? {} : { display: "none" }}
+        onClick={handleReset}
+      >
+        Reset
+      </button>
     </div>
   );
 }
