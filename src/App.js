@@ -4,24 +4,20 @@ import "./App.css";
 function App() {
   const [step, setStep] = useState(1);
   const [count, setCount] = useState(0);
-  const [isDisplay, setIsDisplay] = useState(false);
   const date = new Date();
   date.setDate(date.getDate() + count);
 
   function handleStepChange(e) {
     setStep(+e.target.value);
-    setIsDisplay(true);
   }
 
   function handleCountChange(e) {
     setCount(+e.target.value);
-    setIsDisplay(true);
   }
 
   function handleReset() {
     setStep(1);
     setCount(0);
-    setIsDisplay(false);
   }
 
   function handleCountDec() {
@@ -60,7 +56,7 @@ function App() {
       </p>
 
       <button
-        style={isDisplay ? {} : { display: "none" }}
+        style={step !== 1 || count !== 0 ? {} : { display: "none" }}
         onClick={handleReset}
       >
         Reset
